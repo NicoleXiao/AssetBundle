@@ -61,31 +61,31 @@ public class BuildAssetBundle : Editor {
 
     [MenuItem("Build/Move AssetBunlde To Windows", false, 105)]
     public static void MoveToStreamingAssetsForWindows() {
-        buildPath = GetSaveABPath(BuildTarget.StandaloneWindows);
-        copyPath = GetABCopyPath(BuildTarget.StandaloneWindows);
-        Move(buildPath, copyPath);
+        buildPath =PathManager. GetSaveABPath(BuildTarget.StandaloneWindows);
+        copyPath = PathManager.GetABCopyPath(BuildTarget.StandaloneWindows);
+        PathManager.Move(buildPath, copyPath);
         AssetDatabase.Refresh();
     }
 
     [MenuItem("Build/Move AssetBunlde To Android", false, 106)]
     public static void MoveToStreamingAssetsForAndroid() {
-        buildPath = GetSaveABPath(BuildTarget.Android);
-        copyPath = GetABCopyPath(BuildTarget.Android);
-        Move(buildPath, copyPath);
+        buildPath = PathManager.GetSaveABPath(BuildTarget.Android);
+        copyPath = PathManager.GetABCopyPath(BuildTarget.Android);
+        PathManager.Move(buildPath, copyPath);
         AssetDatabase.Refresh();
     }
 
     [MenuItem("Build/Move AssetBunlde To IOS", false, 107)]
     public static void MoveToStreamingAssetsForIOS() {
-        buildPath = GetSaveABPath(BuildTarget.iOS);
-        copyPath = GetABCopyPath(BuildTarget.iOS);
-        Move(buildPath, copyPath);
+        buildPath = PathManager.GetSaveABPath(BuildTarget.iOS);
+        copyPath = PathManager.GetABCopyPath(BuildTarget.iOS);
+        PathManager.Move(buildPath, copyPath);
         AssetDatabase.Refresh();
     }
 
 
     public static void BuildAssetResource(BuildTarget target) {
-        buildPath = GetSaveABPath(target);
+        buildPath = PathManager.GetSaveABPath(target);
         string path = buildPath.Substring(0, buildPath.LastIndexOf('/'));
         manifestPath = buildPath + path.Substring(path.LastIndexOf('/') + 1) + "";
         if (!Directory.Exists(buildPath)) {
@@ -199,53 +199,5 @@ public class BuildAssetBundle : Editor {
     private static AssetImporter GetAssetImport(string assetPath) {
         string importerPath = "Assets" + assetPath.Substring(Application.dataPath.Length);
         return AssetImporter.GetAtPath(importerPath);
-    }
-
-    public static string GetSaveABPath(UnityEditor.BuildTarget target) {
-        string path = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf(@"/") + 1) + "AssetBundleBuild";
-        return GetEditorPath(target, path);
-    }
-
-    public static string GetABCopyPath(UnityEditor.BuildTarget target) {
-        string path = Application.streamingAssetsPath + "/AssetBundle";
-        return GetEditorPath(target, path);
-    }
-
-    private static string GetEditorPath(UnityEditor.BuildTarget target, string path) {
-        if (target == UnityEditor.BuildTarget.StandaloneWindows) {
-            return path + "/Windows/";
-        } else if (target == UnityEditor.BuildTarget.Android) {
-            return path + "/Android/";
-        } else if (target == UnityEditor.BuildTarget.iOS) {
-            return path + "/IOS/";
-        }
-        return "";
-    }
-
-    /// <summary>
-    ///  复制数据
-    /// </summary>
-    /// <param name="oriPath"></param>
-    /// <param name="movePath"></param>
-    public static void Move(string oriPath, string movePath) {
-        if (Directory.Exists(oriPath)) {
-            if (!Directory.Exists(movePath)) {
-                Directory.CreateDirectory(movePath);
-            }
-            List<string> files = new List<string>(Directory.GetFiles(oriPath));
-            List<string> folders = new List<string>(Directory.GetDirectories(oriPath));
-            files.ForEach(c => {
-                string destFile = Path.Combine(movePath, Path.GetFileName(c));
-                if (!destFile.EndsWith(".meta") && !destFile.EndsWith(".manifest")) {
-                    File.Copy(c, destFile, true);//覆盖模式
-                }
-            });
-            folders.ForEach(c => {
-                string destDir = Path.Combine(movePath, Path.GetFileName(c));
-                Move(c, destDir);
-            });
-        } else {
-            Debug.Log(" 没有可复制的资源，请检查打包资源 ！");
-        }
     }
 }
