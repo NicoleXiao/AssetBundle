@@ -11,7 +11,7 @@ public class BuildAssetBundle : Editor {
     private static string manifestPath = "";
     private static string assetTail = ".unity3d";
     /**设置打包路径*/
-    private static string sourcePath = Application.dataPath + "/PackageAssets";
+    private static string sourcePath = Application.dataPath + "/"+LoadPathMgr.Build_Path;
     /**所有shader单独处理，打进一个包里面，这里根据具体情况设置*/
     private static List<string> m_ShaderPath = new List<string>();
 
@@ -190,7 +190,7 @@ public class BuildAssetBundle : Editor {
 
     private static void SetSingleAssetBundleName(string assetPath) {
         AssetImporter assetImporter = GetAssetImport(assetPath);
-        string tempName = assetPath.Substring(assetPath.LastIndexOf("PackageAssets") + 14);
+        string tempName = assetPath.Substring(assetPath.LastIndexOf(LoadPathMgr.Build_Path) + LoadPathMgr.Build_Path.Length + 1);
         string assetName = tempName.Remove(tempName.LastIndexOf(".")) + assetTail;
         Debug.Log(assetName.ToLower());
         assetImporter.assetBundleName = assetName.ToLower();
