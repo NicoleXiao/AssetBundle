@@ -6,7 +6,7 @@ public class LoadPathMgr
 {
     public static string Asset_Tail = ".unity3d";
     public static string Build_Path = "Package";
-    public static string Image_Path = "UI/UI_hero_";
+    public static string Hero_Atlas_Path = "UI/Atlas/hero.unity3d";
     public static string Hero_Prefab = "Prefab/HeroItem.unity3d";
 }
 

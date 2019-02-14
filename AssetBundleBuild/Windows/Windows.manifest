@@ -1,22 +1,10 @@
 ManifestFileVersion: 0
-CRC: 2318751299
+CRC: 3966060064
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: prefab/heroitem.unity3d
       Dependencies: {}
     Info_1:
-      Name: ui/ui_hero_1.unity3d
-      Dependencies: {}
-    Info_2:
-      Name: ui/ui_hero_2.unity3d
-      Dependencies: {}
-    Info_3:
-      Name: ui/ui_hero_3.unity3d
-      Dependencies: {}
-    Info_4:
-      Name: ui/ui_hero_4.unity3d
-      Dependencies: {}
-    Info_5:
-      Name: ui/ui_hero_5.unity3d
+      Name: ui/atlas/hero.unity3d
       Dependencies: {}

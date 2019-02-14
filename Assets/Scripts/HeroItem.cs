@@ -9,10 +9,9 @@ public class HeroItem : MonoBehaviour
     public Text m_heroName;
 
     public void ChangeHero(int index) {
-        string path = LoadPathMgr.Image_Path + index.ToString () + LoadPathMgr.Asset_Tail;
+        string path = "UI_hero_"+index;
         m_heroHead.enabled = false;
-        LoadAssetMgr.instance.LoadSprite (path, path.GetAssetName (), true, delegate (Sprite sp) {
-            DespawnSprite ();
+        LoadAssetMgr.instance.LoadSprite (LoadPathMgr.Hero_Atlas_Path, path, true, delegate (Sprite sp) {
             m_heroHead.sprite = sp;
             m_heroHead.SetNativeSize ();
             m_heroHead.enabled = true;

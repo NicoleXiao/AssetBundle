@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1784287653
+CRC: 3054964439
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 71f1f47aaeca0ad5fa28ccc4e92e1b6a
+    Hash: 22dc0ff5fbcf10f1e4c4f5d81f99b447
   TypeTreeHash:
     serializedVersion: 2
     Hash: ea5a42e0fd8ea905efa7aa926a3b8944
@@ -14,5 +14,9 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Package/UI/UI_hero_4.png
+- Assets/Package/UI/Atlas/hero/UI_hero_3.png
+- Assets/Package/UI/Atlas/hero/UI_hero_4.png
+- Assets/Package/UI/Atlas/hero/UI_hero_5.png
+- Assets/Package/UI/Atlas/hero/UI_hero_1.png
+- Assets/Package/UI/Atlas/hero/UI_hero_2.png
 Dependencies: []

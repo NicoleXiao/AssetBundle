@@ -220,6 +220,7 @@ public class AssetBundleMgr : MonoSingleton<AssetBundleMgr> {
                 LoadedAssetBundle load_Asset = null;
                 if (m_loadAssetDic.TryGetValue (deName, out load_Asset)) {
                     load_Asset.m_referenceCount++;
+                    Debug.Log (string.Format ("增加 {0} 的引用，引用计数为 {1}", deName, m_loadAssetDic[deName].m_referenceCount));
                 } else if (!m_LoadRequests.ContainsKey (deName)) {
                     GetLoadAssetBundleDependencies (loadList, deName);
                 }
@@ -294,6 +295,7 @@ public class AssetBundleMgr : MonoSingleton<AssetBundleMgr> {
             return;
         }
         abInfo.m_referenceCount++;
+        Debug.Log (string.Format ("增加 {0} 的引用，引用计数为 {1}", abName, m_loadAssetDic[abName].m_referenceCount));
     }
 
     private void AddDependenciesReference(string name) {
@@ -332,8 +334,10 @@ public class AssetBundleMgr : MonoSingleton<AssetBundleMgr> {
             }
             abInfo.m_AssetBundle.Unload (isThorough);
             m_loadAssetDic.Remove (abName);
-            UnityEngine.Debug.Log (string.Format ("{0}释放成功 ", abName));
+            UnityEngine.Debug.Log (string.Format ("{0}引用计数为 0，释放成功 ", abName));
 
+        } else {
+            Debug.Log (string.Format ("减少 {0} 的引用，引用计数为 {1}", abName, m_loadAssetDic[abName].m_referenceCount));
         }
     }
 

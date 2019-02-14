@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 85b743fb7d135d041b375f243a44909b
+guid: a9cc1cd1bc729bf48ac2fab246d555fd
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 52cbdbdc777ca46409e67f5d0217e122
+    spriteID: 780b8d6adbe5b534f8f1761df59da0f0
     vertices: []
     indices: 
     edges: []
@@ -106,5 +106,5 @@ TextureImporter:
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
-  assetBundleName: ui/ui_hero_2.unity3d
+  assetBundleName: ui/atlas/hero.unity3d
   assetBundleVariant: 

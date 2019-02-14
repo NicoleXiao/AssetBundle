@@ -97,9 +97,7 @@ public class ObjectPool<T> where T : UnityEngine.Object {
     public void Recycle(T obj) {
         for(int i = 0; i < m_poolItems.Count; i++) {
             if (m_poolItems[i].obj.Equals(obj)) {
-#if AB_LOADER
                 AssetBundleMgr.instance.UnloadAssetBundle (m_poolItems[i].abName, true);
-#endif
                 m_poolItems[i].poolState = PoolState.Idle;
                 break;
             }
@@ -136,9 +134,7 @@ public class ObjectPool<T> where T : UnityEngine.Object {
 #else
                         UnityEngine.Object.Destroy(items[i].obj);
 #endif
-#if AB_LOADER
                         AssetBundleMgr.instance.UnloadAssetBundle(items[i].abName,true);
-#endif
                         items.RemoveAt(i);
                         releaseCount++;
                     }
