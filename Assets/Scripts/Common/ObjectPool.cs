@@ -32,6 +32,7 @@ public class ObjectPool<T> where T : UnityEngine.Object {
         PoolItem<T> item = new PoolItem<T>();
         item.obj = prefab;
         item.abName = abName;
+        item.assetName = assetName;
         item.poolState = use ? PoolState.Use : PoolState.Idle;
         item.useTime = Time.realtimeSinceStartup;
         int key = GetHashCode(abName,assetName);
@@ -97,7 +98,6 @@ public class ObjectPool<T> where T : UnityEngine.Object {
     public void Recycle(T obj) {
         for(int i = 0; i < m_poolItems.Count; i++) {
             if (m_poolItems[i].obj.Equals(obj)) {
-                AssetBundleMgr.instance.UnloadAssetBundle (m_poolItems[i].abName, true);
                 m_poolItems[i].poolState = PoolState.Idle;
                 break;
             }
@@ -124,6 +124,8 @@ public class ObjectPool<T> where T : UnityEngine.Object {
         Debug.Log("开始清理");
         cullingActive = true;
         int releaseCount = 0;
+        //全部卸载完，需要移除的key值
+        List<int> removeKey = new List<int> ();
         foreach (List<PoolItem<T>> items in m_spawned.Values) {
             for (int i = 0; i < items.Count; i++) {
                 if (items[i].poolState == PoolState.Idle) {
@@ -135,8 +137,14 @@ public class ObjectPool<T> where T : UnityEngine.Object {
                         UnityEngine.Object.Destroy(items[i].obj);
 #endif
                         AssetBundleMgr.instance.UnloadAssetBundle(items[i].abName,true);
-                        items.RemoveAt(i);
+                        if (AssetBundleMgr.instance.IsUnLoadAB (items[i].abName)) {
+                            int key = GetHashCode (items[i].abName, items[i].assetName);
+                            removeKey.Add (key);
+                        }
+                        items.RemoveAt (i);
                         releaseCount++;
+                     
+                        
                     }
                     if (releaseCount >= cullMaxPerPass) {
                         releaseCount = 0;
@@ -146,6 +154,15 @@ public class ObjectPool<T> where T : UnityEngine.Object {
             }
             cullingActive = false;
         }
+        if (removeKey.Count > 0) {
+            for(int i = removeKey.Count-1; i <=0; i--) {
+                if (m_spawned.ContainsKey (removeKey[i])) {
+                    m_spawned.Remove (removeKey[i]);
+                    removeKey.Remove (i);
+                }
+            }
+        }
+
     }
 
     private void SetParent(T obj) 
@@ -169,6 +186,7 @@ public class PoolItem<T> {
     public T obj;
     /**物体的ab包名字*/
     public string abName;
+    public string assetName;
     /**物体最近一次使用的时间*/
     public float useTime;
     /**物体状态(闲置/使用)*/

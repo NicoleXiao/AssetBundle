@@ -323,6 +323,15 @@ public class AssetBundleMgr : MonoSingleton<AssetBundleMgr> {
         //Debug.Log (string.Format ("减少 {0} 的引用，引用计数为 {1}", abName, m_loadAssetDic[abName].m_referenceCount));
     }
 
+    /// <summary>
+    /// 判断是否AB包已经被卸载了
+    /// </summary>
+    /// <param name="abName"></param>
+    /// <returns></returns>
+    public bool IsUnLoadAB(string abName) {
+        return m_loadAssetDic.ContainsKey (abName);
+    }
+
     private void UnloadAssetBundleInternal(string abName, bool isThorough) {
         LoadedAssetBundle abInfo = GetLoadedAssetBundle (abName);
         if (abInfo == null) {
@@ -335,7 +344,8 @@ public class AssetBundleMgr : MonoSingleton<AssetBundleMgr> {
             abInfo.m_AssetBundle.Unload (isThorough);
             m_loadAssetDic.Remove (abName);
             UnityEngine.Debug.Log (string.Format ("{0}引用计数为 0，释放成功 ", abName));
-
+            Resources.UnloadUnusedAssets ();
+            System.GC.Collect ();
         } else {
             Debug.Log (string.Format ("减少 {0} 的引用，引用计数为 {1}", abName, m_loadAssetDic[abName].m_referenceCount));
         }
