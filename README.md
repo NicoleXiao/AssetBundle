@@ -1,15 +1,10 @@
 # AssetBundle
 关于Assetbundle 的打包和加载功能
 
-一.打包AssetBundle
-
-Editor文件下的BuildAssetBundle脚本
-主要功能：
-1.	通过指定文件路径，设置路径下面所有资源的AssetBundle Name.
-2.	分别打包Windows，Android和IOS平台下需要的AssetBundle包.因为项目需求，这里我打包的目录是指定的Assets外面，后面通过代码把资源copy到StreamingAssets下面。
-3.	对比两次打包的AssetBundleManifest的文件差异，找出多余资源删除，并删除空的文件夹.
-4.	AssetBundle资源复制到StreamingAssets下面.
-
-二.加载AssetBundle
-
-使用WWW流加载AssetBundle，加载的时候注意加载依赖关系。
+Editor文件下的BuildAssetBundle脚本，用于AssetBundle名称设置和打包移动。
+使用方法：
+1.	在LoadPathMgr里面指定Build_Path，即打包文件夹在Assets下面的路径。
+2.	选择菜单栏里面的Build->Set AssetBundle Name 设置包名称
+3.	选择对应平台进行打包，文件会打包到Assets同级目录下面的AssetBundleBuild下
+4.	选择Build下面的Move指令，移动AssetBundleBuild下面的文件到StreamAssets下面。
+（这里的第三步可以直接打包到StreamAssets下面，根据个人做法来吧）
